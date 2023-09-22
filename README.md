@@ -5,6 +5,7 @@ In this project there is an implementation of Laravel CRUD operations using Vue3
 ## Note
 - This was developed and tested using windows machine.
 - While using ```docker-compose up``` if you see any error that port is not available then either change the port for that image or look for a solution to kill that running port.
+- Pagination is set to 10, so you will be able to see pagination only when your Isues count is greater the 10.
 
 ## Setup
 
