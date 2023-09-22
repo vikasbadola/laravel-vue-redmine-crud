@@ -38,6 +38,9 @@ git clone https://github.com/vikasbadola/laravel-vue-redmine-crud.git
 - Create Issue Priorities
   ```http://localhost:8080/enumerations/new?type=IssuePriority```
 - Create issue tracker ```http://localhost:8080/trackers/new```, select your project while creating it.
+- Within docker container run ```php artisan serve --host=0.0.0.0```
+- Run outside container ```docker-compose run --rm node install```
+- Now, you can access the application using url ```http://localhost:8000/```
 
 
 
