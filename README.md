@@ -6,6 +6,7 @@ In this project there is an implementation of Laravel CRUD operations using Vue3
 - This was developed and tested using windows machine.
 - While using ```docker-compose up``` if you see any error that port is not available then either change the port for that image or look for a solution to kill that running port.
 - Pagination is set to 10, so you will be able to see pagination only when your Isues count is greater the 10.
+- You might see slowness in the app this because of running it in windows using WSL. Please wait till the loader fades out.
 
 ## Setup
 
@@ -47,7 +48,17 @@ git clone https://github.com/vikasbadola/laravel-vue-redmine-crud.git
 - Within docker container run ```php artisan serve --host=0.0.0.0```
 - Run outside container ```docker-compose run --rm node install```
 - Now, you can access the application using url ```http://localhost:8000/```
-- Perform CRUD here.
+![Issueslist](https://github.com/vikasbadola/laravel-vue-redmine-crud/assets/6604713/334f370b-b4ea-4656-b742-866b6b037363)
+
+## screenshots of the app and functionality
+
+![IssueListNopaginator](https://github.com/vikasbadola/laravel-vue-redmine-crud/assets/6604713/48a7ea31-5d04-498c-ad6c-1b68fe3b70da)
+![issueListPaginator](https://github.com/vikasbadola/laravel-vue-redmine-crud/assets/6604713/cf264aa7-5f7e-4b3f-966a-0d0571584da9)
+![addIssue](https://github.com/vikasbadola/laravel-vue-redmine-crud/assets/6604713/4f4f5d8d-2620-4812-b7d4-2333036aae0e)
+![editIssue](https://github.com/vikasbadola/laravel-vue-redmine-crud/assets/6604713/d39ea56f-7ec6-41eb-9c75-d0fa11c5d875)
+![deleteIssue](https://github.com/vikasbadola/laravel-vue-redmine-crud/assets/6604713/f5875b38-be51-4401-b4a5-054e908dd77b)
+
+
 ## Accesssing local database instead of redmine apis
 - go to .env and set ```USE_REDMINE_REST_APIS=false```, now you can use your local databse to perform CRUD. 
 
