@@ -81,14 +81,14 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button @click="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </Form>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="deleteIssueModal" data-backdrop="static" tabindex="-1" role="dialog"
+    <div class="modal fade" ref="formContainerDelete" id="deleteIssueModal" data-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -101,7 +101,7 @@
                     <h5>Are you sure you want to delete this issue ?</h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button @click="closeDeleteModal" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button @click.prevent="deleteIssue" type="button" class="btn btn-primary">Delete Issue</button>
                 </div>
             </div>
@@ -129,6 +129,7 @@ const editing = ref(false);
 const formValues = ref();
 const form = ref(null);
 const formContainer = ref(null);
+const formContainerDelete = ref(null);
 let issueModal;
 let issueDeleteModal;
 let loader = useLoading();
@@ -140,6 +141,14 @@ onMounted(() => {
     issueModal = new Modal(document.getElementById('issueFormModal'));
     issueDeleteModal = new Modal(document.getElementById('deleteIssueModal'));
 });
+
+const closeModal = () => {
+    issueModal.hide();
+}
+
+const closeDeleteModal = () => {
+    issueDeleteModal.hide();
+}
 
 const getIssues = async(page = 1) => {
     loader.show();
@@ -257,11 +266,15 @@ const confirmIssueDeletion = (id) => {
 };
 
 const deleteIssue = async() => {
+    loader.show({
+        container: formContainerDelete.value,
+    });
     await axios.delete(`/api/issues/${issueIdDeleted.value}`)
     .then((response) => {
         issues.value= response.data;
         issueDeleteModal.hide();
         toastr.success('Issue deleted successfully!');
+        loader.hide();
     });
 };
 
