@@ -1,0 +1,72 @@
+version: '3.1'
+
+services:
+
+  # MariaDB Service
+  mariadb:
+    image: mariadb:10.11
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+  # PHP Service
+  php:
+    build: './phpDocker/'
+    volumes:
+      - .:/var/www/html/
+    ports:
+    - "8000:8000"
+    depends_on:
+      - mariadb
+
+  # Apache Service
+  apache:
+    build: './apacheDocker/'
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./www/:/var/www/html/
+
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8088:80
+    environment:
+      PMA_HOST: mariadb
+    depends_on:
+      - mariadb
+
+  redmine:
+    image: redmine
+    restart: always
+    ports:
+      - 8080:3000
+    environment:
+      REDMINE_DB_MYSQL: db
+      REDMINE_DB_PASSWORD: example
+      REDMINE_SECRET_KEY_BASE: supersecretkey
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: redmine
+
+  node:
+    container_name: node
+    image: "node:16.20.2"
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 5173:5173
+    entrypoint: ['npm']
+
+  # Volumes
+volumes:
+  mysqldata:
